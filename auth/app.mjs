@@ -11,6 +11,7 @@
  *
  */
 
+import { createPostController, getAllPosts } from "./controller/postsController.js";
 import { fetchAllUsers, createUser } from "./controller/userController.js";
 
 export const lambdaHandler = async (event, context) => {
@@ -42,3 +43,74 @@ export const lambdaHandler = async (event, context) => {
     };
   }
 };
+
+export const createPostsHandler = async (event, context) => {
+  try {
+
+    console.log(`POST CREATION API "uWu" | ${JSON.stringify(event.body)} | INFO`)
+
+    const {body} = event
+
+    const response = await createPostController(JSON.parse(body))
+
+    console.log("here is your post creatin handler")
+
+    return response;
+    
+  } catch (err) {
+    console.log('-----------ERROR-----------', err)
+
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "something went wrong"
+      })
+    };
+  }
+};
+
+export const fetchPostsHandler = async (event, context) => {
+  try {
+
+    console.log(`GET CREATION API "uWu" | INFO`)
+
+    const response = await getAllPosts()
+
+    console.log("here is your get posts handler")
+
+    return response;
+    
+  } catch (err) {
+    console.log('-----------ERROR-----------', err)
+
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "something went wrong"
+      })
+    };
+  }
+};
+export const processData = async (event, context) => {
+  try {
+
+    console.log(`GET CREATION API "uWu" | ${JSON.stringify(event)} | INFO`)
+
+    const response = await getAllPosts() 
+
+    console.log("here is your get posts handler")
+
+    return response;
+    
+  } catch (err) {
+    console.log('-----------ERROR-----------', err)
+
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "something went wrong"
+      })
+    };
+  }
+};
+

@@ -30,14 +30,47 @@ Resources:
           Properties:
             Path: /users
             Method: POST
+  CreatePostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.createPostsHandler
+      Runtime: nodejs18.x
+      CodeUri: auth/
+      Events:
+        CreatePost:
+          Type: Api
+          Properties:
+            Path: /posts/createPost
+            Method: POST
+  GetAllPosts:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.fetchPostsHandler
+      Runtime: nodejs18.x
+      CodeUri: auth/
+      Events:
+        CreatePost:
+          Type: Api
+          Properties:
+            Path: /posts/getPosts
+            Method: GET
+  ProcessDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.processData
+      Runtime: nodejs18.x
+      CodeUri: auth/
 
 Outputs:
   GetAllUsers:
     Description: "API Gateway endpoint URL for fetching all users"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/users/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
   CreateUser:
     Description: "API Gateway endpoint URL for creating user"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/users/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  GetAllPosts:
+    Description: "API Gateway endpoint URL for fetching posts"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
   AuthenticationLambdaArn:
     Description: "User Lambda Function ARN"
     Value: !GetAtt AuthenticationLambda.Arn

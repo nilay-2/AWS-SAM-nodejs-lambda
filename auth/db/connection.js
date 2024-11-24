@@ -17,7 +17,7 @@ const connect = async () => {
   }
 };
 
-connect();
+(async () => await connect())()
 
 module.exports = sequelize
 
